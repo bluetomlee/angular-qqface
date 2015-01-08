@@ -25,7 +25,7 @@ Use it just like any Angular filter. Here's some very simple example markup:
     </head>
     <body ng-app="app" ng-controller="AppCtrl">
         <ul>
-            <li ng-repeat="item in items" ng-bind-html-unsafe="message | qqface"></li>
+            <li ng-repeat="item in items" ng-bind-html-unsafe="item | qqface"></li>
         </ul>
     </body>
 </html>
