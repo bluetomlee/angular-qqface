@@ -1,6 +1,6 @@
 # AngularJS QQFace filter
 
-> An AngularJS filter for replacing [qqface codes](http://www..com) with actual emoticons
+> An AngularJS filter for replacing [qqface codes](#) with actual emoticons
 
 ## Installation
 
