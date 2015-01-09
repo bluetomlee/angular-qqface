@@ -4,7 +4,7 @@
   angular.module('qqface', []).filter('qqface', function(){
     return function(input) {
 
-        var face = ['/::)', '/::~', '/::B', '/::|', '/:8-)', '/::<', '/::$', '/::X', '/::Z', '/::\'(', '/::-|', '/::@', '/::P', '/::D', '/::O', '/::(', '/::+', '/:Cb', '/::Q', '/::T', '/:,@P', '/:,@-D', '/::d', '/:,@o', '/::g', '/:|-)', '/::!', '/::L', '/::>', '/::,@', '/:,@f', '/::-S', '/:?', '/:,@x', '/:,@@', '/::8', '/:,@!', '/:!!!', '/:xx', '/:bye', '/:wipe', '/:dig', '/:handclap', '/:&-(', '/:B-)', '/:<@', '/:@>', '/::-O', '/:>-|', '/:P-(', '/::\'|', '/:X-)', '/::*', '/:@x', '/:8*', '/:pd', '/:<W>', '/:beer', '/:basketb', '/:oo', '/:coffee', '/:eat', '/:pig', '/:rose', '/:fade', '/:showlove', '/:heart', '/:break', '/:cake', '/:li', '/:bome', '/:kn', '/:footb', '/:ladybug', '/:shit', '/:moon', '/:sun', '/:gift', '/:hug', '/:strong', '/:weak', '/:share', '/:v', '/:@)', '/:jj', '/:@@', '/:bad', '/:lvu', '/:no', '/:ok', '/:love', '/:<L>', '/:jump', '/:shake', '/:<O>', '/:circle', '/:kotow', '/:turn', '/:skip', '/:oY', '/:#-0', '/hiphot', '/:kiss', '/:<&', '/:&>'],
+        var face = ['/::)', '/::~', '/::B', '/::|', '/:8-)', '/::<', '/::$', '/::X', '/::Z', '/::\'(', '/::-|', '/::@', '/::P', '/::D', '/::O', '/::(', '/::+', '/:--b', '/::Q', '/::T', '/:,@P', '/:,@-D', '/::d', '/:,@o', '/::g', '/:|-)', '/::!', '/::L', '/::>', '/::,@', '/:,@f', '/::-S', '/:?', '/:,@x', '/:,@@', '/::8', '/:,@!', '/:!!!', '/:xx', '/:bye', '/:wipe', '/:dig', '/:handclap', '/:&-(', '/:B-)', '/:<@', '/:@>', '/::-O', '/:>-|', '/:P-(', '/::\'|', '/:X-)', '/::*', '/:@x', '/:8*', '/:pd', '/:<W>', '/:beer', '/:basketb', '/:oo', '/:coffee', '/:eat', '/:pig', '/:rose', '/:fade', '/:showlove', '/:heart', '/:break', '/:cake', '/:li', '/:bome', '/:kn', '/:footb', '/:ladybug', '/:shit', '/:moon', '/:sun', '/:gift', '/:hug', '/:strong', '/:weak', '/:share', '/:v', '/:@)', '/:jj', '/:@@', '/:bad', '/:lvu', '/:no', '/:ok', '/:love', '/:<L>', '/:jump', '/:shake', '/:<O>', '/:circle', '/:kotow', '/:turn', '/:skip', '/:oY', '/:#-0', '/hiphot', '/:kiss', '/:<&', '/:&>'],
             emojis = [
               "bowtie", "smile", "laughing", "blush", "smiley", "relaxed",
               "smirk", "heart_eyes", "kissing_heart", "kissing_closed_eyes", "flushed",
@@ -171,21 +171,28 @@
           rEmojis = new RegExp(":(" + emojis.join("|") + "):", "g"),
           rFace = new RegExp("(/::\\)|/::~|/::B|/::\\||/:8-\\)|/::<|/::$|/::X|/::Z|/::'\\(|/::-\\||/::@|/::P|/::D|/::O|/::\\(|/::\\+|/:--b|/::Q|/::T|/:,@P|/:,@-D|/::d|/:,@o|/::g|/:\\|-\\)|/::!|/::L|/::>|/::,@|/:,@f|/::-S|/:\\?|/:,@x|/:,@@|/::8|/:,@!|/:!!!|/:xx|/:bye|/:wipe|/:dig|/:handclap|/:&-\\(|/:B-\\)|/:<@|/:@>|/::-O|/:>-\\||/:P-\\(|/::'\\||/:X-\\)|/::\\*|/:@x|/:8\\*|/:pd|/:<W>|/:beer|/:basketb|/:oo|/:coffee|/:eat|/:pig|/:rose|/:fade|/:showlove|/:heart|/:break|/:cake|/:li|/:bome|/:kn|/:footb|/:ladybug|/:shit|/:moon|/:sun|/:gift|/:hug|/:strong|/:weak|/:share|/:v|/:@\\)|/:jj|/:@@|/:bad|/:lvu|/:no|/:ok|/:love|/:<L>|/:jump|/:shake|/:<O>|/:circle|/:kotow|/:turn|/:skip|/:oY|/:#-0|/:hiphot|/:kiss|/:<&|/:&>)","g"),
           index = face.indexOf(input) + 1,
-          bool;
-          bool = input.match(rEmojis);
-        if(!bool){
+          bool1 = input.match(rEmojis),
+          bool2 = input.match(rFace);
+
+        if(bool1 || bool2){
               return input.replace(rFace,function(match, text){
-                  var num = face.indexOf(match) + 1;
+                  var num = face.indexOf(match) + 1,
+                      scripts = document.scripts,
+                      jsName = "angular-qqface.js",
+                      jsPath;
+                   for(var i = scripts.length;i > 0;i --){
+                        if(scripts[i-1].src.indexOf(jsName) >- 1){
+                               jsPath=scripts[i-1].src.substring(0,scripts[i-1].src.lastIndexOf("/")+1);  
+                            }
+                       };
                   (num<10) && (num = "0"+num);
-                  return "\<img src='static/v1/qy/app/bower_components/angular-qqface/dist/face/" + num + "\.gif'\>";
-              })
-        }else if(bool){
-              return input.replace(rEmojis, function (match, text) {
+                  return "\<img src='" + jsPath + "/face/" + num + "\.gif'\>";
+              }).replace(rEmojis, function (match, text) {
                   return "<i class='emoji emoji_" + text + "' title=':" + text + ":'>" + text + "</i>";
-              })        
+              })
         }else{
               return input;
         }
-      
+
     } 
   })
